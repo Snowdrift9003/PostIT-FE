@@ -19,6 +19,7 @@ export class NoteCreateEditComponent implements OnInit {
   noteId: string = '';
   mode: NoteCreateEditMode = NoteCreateEditMode.CREATE;
   content: string = '';
+  originalContent: string = '';
   private activatedRoute = inject(ActivatedRoute);
 
 
@@ -29,7 +30,7 @@ export class NoteCreateEditComponent implements OnInit {
     this.noteId = this.activatedRoute.snapshot.params['id'];
     if (this.noteId) {
       this.mode = NoteCreateEditMode.EDIT;
-      this.content = (await this.noteService.getNoteById(this.noteId)).content;
+      this.content = this.originalContent = (await this.noteService.getNoteById(this.noteId)).content;
     }
   }
 
@@ -60,5 +61,11 @@ export class NoteCreateEditComponent implements OnInit {
 
     //goBack
     await this.router.navigate(['/'])
+  }
+
+  protected readonly NoteCreateEditMode = NoteCreateEditMode;
+
+  canSave() {
+    return /\S/.test(this.content) && (this.mode === NoteCreateEditMode.CREATE || this.content.trim() !== this.originalContent);
   }
 }

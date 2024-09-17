@@ -6,9 +6,9 @@
 .note-card-content {
   width: 200px;
   height: 150px;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: large;
 }
 

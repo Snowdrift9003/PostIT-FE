@@ -13,8 +13,9 @@
       <a routerLink="/">
         <button mat-button>CANCEL</button>
       </a>
-      <button (click)="delete()" mat-button style="color:darkred">DELETE</button>
-      <button (click)="save()" mat-button>SAVE</button>
+      <button (click)="delete()" [hidden]="mode!== NoteCreateEditMode.EDIT" mat-button style="color:darkred">DELETE
+      </button>
+      <button (click)="save()" [disabled]="!canSave()" mat-button>SAVE</button>
     </mat-card-actions>
   </mat-card>
 </div>

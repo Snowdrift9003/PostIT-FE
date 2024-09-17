@@ -1,0 +1,23 @@
+<div class="create-edit-form">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Edit Note</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Note content</mat-label>
+        <input [(ngModel)]="content" matInput maxlength="200" required>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <a routerLink="/">
+        <button mat-button>CANCEL</button>
+      </a>
+      <a routerLink="/">
+        <button mat-button style="color:darkred">DELETE</button>
+      </a>
+      <a routerLink="/">
+        <button mat-button>SAVE</button>
+      </a>
+    </mat-card-actions>
+  </mat-card>

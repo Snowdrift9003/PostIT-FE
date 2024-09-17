@@ -1,0 +1,12 @@
+.create-edit-form {
+  margin: 15px;
+  max-width: 400px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-mdc-card-actions, .mat-mdc-card-content, .mat-mdc-card-header {
+  background-color: rgb(246, 239, 130);
+}

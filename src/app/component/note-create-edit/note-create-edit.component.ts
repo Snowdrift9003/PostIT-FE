@@ -1,13 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {NoteCreateEditMode} from "./note-create-edit.mode";
-import {Note} from "../../model/note";
-import axios from "axios";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
+import {NoteService} from "../../service/note.service";
 
 @Component({
   selector: 'app-note-create-edit',
@@ -17,21 +16,20 @@ import {MatCardModule} from "@angular/material/card";
   styleUrl: './note-create-edit.component.css'
 })
 export class NoteCreateEditComponent implements OnInit {
-  noteId: String | undefined;
+  noteId: string = '';
   mode: NoteCreateEditMode = NoteCreateEditMode.CREATE;
-  content: String = ''
+  content: string = '';
   private activatedRoute = inject(ActivatedRoute);
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private noteService: NoteService) {
   }
 
   async ngOnInit(): Promise<void> {
     this.noteId = this.activatedRoute.snapshot.params['id'];
     if (this.noteId) {
       this.mode = NoteCreateEditMode.EDIT;
-      const noteResponse = await axios.get<Note>(`http://localhost:8080/api/note/${this.noteId}`);
-      this.content = noteResponse.data.content;
+      this.content = (await this.noteService.getNoteById(this.noteId)).content;
     }
   }
 
@@ -46,7 +44,7 @@ export class NoteCreateEditComponent implements OnInit {
 
   async delete() {
     //delete
-    await axios.delete(`http://localhost:8080/api/note/${this.noteId}`,);
+    await this.noteService.deleteNote(this.noteId)
 
     //go Back
     await this.router.navigate(['/'])
@@ -55,9 +53,9 @@ export class NoteCreateEditComponent implements OnInit {
   async save() {
     //save or update
     if (this.mode === NoteCreateEditMode.CREATE) {
-      await axios.post('http://localhost:8080/api/note', {content: this.content});
+      await this.noteService.createNote(this.content);
     } else {
-      await axios.patch(`http://localhost:8080/api/note/${this.noteId}`, {content: this.content})
+      await this.noteService.updateNote(this.noteId, this.content);
     }
 
     //goBack

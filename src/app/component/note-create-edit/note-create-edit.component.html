@@ -1,7 +1,7 @@
 <div class="create-edit-form">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Edit Note</mat-card-title>
+      <mat-card-title [textContent]="getFormName()"></mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-form-field>
@@ -13,11 +13,8 @@
       <a routerLink="/">
         <button mat-button>CANCEL</button>
       </a>
-      <a routerLink="/">
-        <button mat-button style="color:darkred">DELETE</button>
-      </a>
-      <a routerLink="/">
-        <button mat-button>SAVE</button>
-      </a>
+      <button (click)="delete()" mat-button style="color:darkred">DELETE</button>
+      <button (click)="save()" mat-button>SAVE</button>
     </mat-card-actions>
   </mat-card>
+</div>
